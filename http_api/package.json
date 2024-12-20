@@ -1,0 +1,17 @@
+{
+  "name": "http_api_time_admin",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "scripts": {
+    "dev": "nodemon index.mjs"
+  },
+  "type": "modules",
+  "author": "Jose Bastidas",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
+}
