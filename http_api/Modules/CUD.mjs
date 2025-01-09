@@ -5,7 +5,7 @@ import {habit} from "./Objects/Object-habit.mjs"
 import {category} from "./Objects/Object-category.mjs"
 import {reward} from "./Objects/Object-reward.mjs"
 
-export class CUD{
+export class CUD_module{
 	
 	//items = {data}
 	select_object(table, item){
@@ -112,7 +112,7 @@ export class CUD{
 
 	}
 
-	static async insert_single(){
+	static async insert_single({table, item}){
 
 		const row = select_object(table, item);
 		if(row == undefined){
@@ -130,7 +130,7 @@ export class CUD{
 
 	}
 	
-	static async delete_single(){
+	static async delete_single({table, item}){
 
 		const row = select_object(table, item);
 		if(row == undefined){

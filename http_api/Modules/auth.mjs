@@ -1,7 +1,7 @@
 import {v4 as uuid} from "uuid"
 import {db} from "./Objects-database.mjs"
 
-export class auth{
+export class auth_module{
 
 	static async register({password, name, mail}){
 
