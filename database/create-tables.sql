@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS tareas (
 	description varchar(50),
 	user_id char(36),
 	category_id char(36),
-	created_at timestamp,
+	day date,
+	flag int,
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES users (id),
 	FOREIGN KEY (category_id) REFETENCES tarea_categories (id)
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS habits (
 	description varchar(50),
 	frequency int,
 	user_id char(36),
+	flag int,
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES users (id)
 );

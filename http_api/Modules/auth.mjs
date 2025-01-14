@@ -15,7 +15,7 @@ export class auth_module{
 		const item = new user(data);
 
 		const database = new db();
-		const state = await database.create_user(item);
+		const state = await database.insert_s(item);
 
 		return state;
 		
@@ -81,7 +81,7 @@ export class auth_module{
 		}
 
 		const item = new user(data);
-		const state = await database.updateS(item);
+		const state = await database.update_s(item);
 		
 		if(state.code != 0){
 			return state.error;

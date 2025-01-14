@@ -2,18 +2,13 @@ import pg from "pg"
 
 export class db {
 
-	/* To-do:
-	 * 	function set_stack
-	 * 	functions for single i,d,u
-	 */
-
 	async contructor(){
 
 		this.Insert = [];
 		this.Delete = [];
 		this.Update = [];
 		this.Client = pg.Client;
-		this.dbClient = new Client({
+		this.db_client = new Client({
 			user: process.env.DB_USER ?? "noctis",
 			password: process.env.DB_PASSWORD ?? "526485JB",
 			port: process.env.DB_PORT ?? 5432,
@@ -21,7 +16,7 @@ export class db {
 			database: process.env.DB_NAME ?? "Time_Admin",
 		});
 
-		await this.dbClient.connect();
+		await this.db_client.connect();
 
 	}
 
@@ -33,7 +28,7 @@ export class db {
 			
 			let queryI = {
 				values: [],
-				finalQ: `INSERT INTO ${this.Insert[0].isType()}(${this.Insert[0].getColumns(true)}) VALUES `,
+				finalQ: `INSERT INTO ${this.Insert[0].isType()} VALUES `,
 			}; 
 
 			let cont = 1;
@@ -47,12 +42,15 @@ export class db {
 			});
 
 			queryI.values.foreach( item => {
+				queryI.finalQ = query.finalQ + "(";
 				for(let i = 0; i < item.num; i++){
-					queryI.finalQ = queryI.finalQ + `$${cont}`;
+					queryI.finalQ = queryI.finalQ + ` $${cont}`;
 					cont ++;
 				}	
-				queryI.finalQ = query.finalQ + "RETURNING id";
+				queryI.finalQ = query.finalQ + "), ";
 			});
+
+			queryI.finalQ = queryI.finalQ + "RETURNING id;"
 
 			for(let i = 0; i < queryI.values.length; i++){
 				queryI.values[i] = queryI.values[i].data;
@@ -60,7 +58,7 @@ export class db {
 
 			try{
 
-				const result = await this.dbClient.query(queryI.finalQ, queryI.values);
+				const result = await this.db_client.query(queryI.finalQ, queryI.values);
 
 				if(result.rows.length > 0 ){
 
@@ -108,16 +106,16 @@ export class db {
 				queryU.finalQ = `UPDATE ${this.Update[0].isType()} SET `
 
 				for(let i = 0; i < columns.length; i++){
-					queryU.finalQ = queryU.finalQ + `${columns[i]} = $${cont}`; 
+					queryU.finalQ = queryU.finalQ + `${columns[i]} = $${cont} `; 
 					cont ++
 				}
 
-				queryU.finalQ = queryU.finalQ + `WHERE id = $${cont} RETURNING id`;
+				queryU.finalQ = queryU.finalQ + `WHERE id = $${cont} RETURNING id;`;
 				queryU.values.push(item.getId);
 
 				try{
 
-					const result = await dbClient.query(queryU.finalQ, queryU.values);
+					const result = await db_client.query(queryU.finalQ, queryU.values);
 
 					if(result.rows.length > 0){
 						resultsU.rows.push(result.rows[0]);
@@ -143,17 +141,17 @@ export class db {
 			let cont = 1;
 
 			this.Delete.foreach(async item => {
-				queryD.finalQ = queryD.finalQ + `$${cont},`;
+				queryD.finalQ = queryD.finalQ + ` $${cont},`;
 				cont++;
 				queryD.ids.push(item.getId);
 			})
 
 			queryD.finalQ.slice(0,-1);
-			queryD.finalQ = queryD.finalQ + `)`;
+			queryD.finalQ = queryD.finalQ + `);`;
 
 			try{
 
-				this.bdClient.query(queryD.finalQ, queryD.ids);	
+				this.db_client.query(queryD.finalQ, queryD.ids);	
 				results.push({
 					type: "delete",
 					errors:[],
@@ -174,6 +172,86 @@ export class db {
 
 	}
 
+	async get_row(table, columns, values){
+
+		try{
+	
+			let text: `SELECT * FROM ${table} WHERE `;
+
+			for(let i = 0; i < (columns.length - 1); i++){
+				text = text + `${column[i]} = $${i+1} AND`
+			}
+
+			text = text + `${columns[columns.length-1]} = $${columns.length};`
+
+			const result = this.db_client.query(text, values);
+
+			return result;
+
+		}catch(error){
+			return error;
+		}
+
+	}
+
+	async insert_s(item){
+
+		try{
+
+			let text = `INSERT INTO ${item.is_type()} VALUES (`
+
+			const columns = item.get_columns(true);
+			columns.foreach((column, index) => {
+				text = text + ` $${index + 1}`
+			})
+			text = text + ") RETURNING id;";
+
+			const result = await db_client.query(text, items.get_values(true));
+			
+			return result;
+
+		}catch(error){
+			return error;
+		}
+
+	}
+
+	async update_s(item){
+
+		try{
+
+			let text = `UPDATE ${item.is_type()} SET`
+			const columns = item.get_columns();
+
+			columns.foreach((column, index) => {
+				text = text + ` ${column} = $${index+1},`;
+			});
+
+			text.slice(0.-1);
+			text = text + ` WHERE id = ${item.get_id()}` 
+
+			const result = db_client.query(text, item.get_values);
+			return result;
+
+		}catch(error){
+			return error;
+		}
+
+	}
+
+	async delete_s(item){
+		try{
+
+			let text = `DELETE FROM ${item.is_type()} WHERE id = $1`
+			const result = db_client.query(text, item.get_id);
+
+			return result;
+
+		}catch(error){
+			return error;
+		}
+	}
+
 	add_insert(item){
 		this.Insert.push(item);
 	}
@@ -191,5 +269,7 @@ export class db {
 		this.Update = upd;
 		this.Delete = del;
 	}
+
+	
 
 }

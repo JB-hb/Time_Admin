@@ -7,15 +7,15 @@ export class table{
 		this.table_name = "";
 	}
 
-	isType(){
+	is_type(){
 		return(this.table_name);
 	}
 
-	getId(){
+	get_id(){
 		return values[0];
 	}
 
-	getValues(wid = false){
+	get_values(wid = false){
 
 		let response = []
 		let i = wid == false ? 1 : 0
@@ -30,7 +30,7 @@ export class table{
 		return response;
 	}
 
-	getColumns(wid = false){
+	get_columns(wid = false){
 
 		let response = []
 		let i = wid == false ? 1 : 0
