@@ -20,8 +20,8 @@ export class table{
 		let response = []
 		let i = wid == false ? 1 : 0
 
-		for(i; i < values.length; i++){
-			if(this.value[i] == null){
+		for(i; i < this.values.length; i++){
+			if(this.values[i] == null){
 				continue;
 			}
 			response.push(this.value[i]);
@@ -35,8 +35,8 @@ export class table{
 		let response = []
 		let i = wid == false ? 1 : 0
 
-		for(i; i < values.length; i++){
-			if(this.value[i] == null){
+		for(i; i < this.values.length; i++){
+			if(this.values[i] == null){
 				continue;
 			}
 			response.push(this.columns[i]);

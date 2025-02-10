@@ -51,7 +51,7 @@ export class CUD_module{
 			insertI.foreach(item => {
 				let temp;
 
-				temp = select_object(table, item);
+				temp = this.select_object(table, item);
 				
 				if(temp == undefined){
 					return;
@@ -65,7 +65,7 @@ export class CUD_module{
 			updateI.foreach(item => {
 				let temp;
 				
-				temp = select_object(table, item);
+				temp = this.select_object(table, item);
 
 				if(temp == undefined){
 					return;
@@ -79,7 +79,7 @@ export class CUD_module{
 			deleteI.foreach(item => {
 				let temp;
 				
-				temp = select_object(table, item);
+				temp = this.select_object(table, item);
 
 				if(temp == undefined){
 					return;
@@ -114,7 +114,7 @@ export class CUD_module{
 
 	static async insert_single({table, item}){
 
-		const row = select_object(table, item);
+		const row = this.select_object(table, item);
 		if(row == undefined){
 			return;
 		}
@@ -132,7 +132,7 @@ export class CUD_module{
 	
 	static async delete_single({table, item}){
 
-		const row = select_object(table, item);
+		const row = this.select_object(table, item);
 		if(row == undefined){
 			return;
 		}

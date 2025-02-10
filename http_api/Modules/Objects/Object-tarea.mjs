@@ -3,7 +3,7 @@ import {table} from "./Object-table.mjs"
 export class tarea extends table{
 
 	constructor(id, category_id, description, user_id, created_at){
-		super(table_name,columns, values);
+		super();
 		this.table = "tareas";
 		this.columns = ["id", "category_id", "description", "user_id", "created_at"];
 		this.values = [id ?? null, category_id ?? null, description ?? null, user_id ?? null, created_at ?? null];
