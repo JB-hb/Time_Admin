@@ -38,8 +38,8 @@ time_router.post("/CUD/Task/cat/delete", work_progress);
 time_router.post("/CUD/Rew/create", work_progress);
 time_router.post("/CUD/Rew/delete", work_progress);
 time_router.patch("/CUD/Rew/update", work_progress);
-time_router.get("/get/Rew/cat/:id_user", work_progress);
-time_router.get("/get/Rew/:id_user", work_progress);
+time_router.get("/get/Rew/:cat/:user_id", work_progress);
+time_router.get("/get/Rew/:user_id", work_progress);
 
 //Habits
 

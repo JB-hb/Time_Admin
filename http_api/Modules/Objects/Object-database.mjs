@@ -326,6 +326,7 @@ export class db {
 				}
 
 			}	
+			return {data: response};
 
 		}catch(error){
 			return error;
@@ -346,7 +347,7 @@ export class db {
 			const response = await db_client.query(query_days, [user, start, end]);	
 
 			return {
-				data: response,
+				data: response.rows,
 			};
 
 		}catch(error){
@@ -356,15 +357,17 @@ export class db {
 
 	async get_comhabits_y(user, year){
 
-		const base_query = ""
+			const query_days = "SELECT created_at COUNT(created_at) AS completed FROM habits_completed INNER JOIN habits ON habits.id = habits_completed.habit_id WHERE habits.user_id = $1 AND extract('year' from habits_completed.created_at) = $2 AND extract('month' from habits_completed.created_at) = $3";
+		const response = [];
 
-		for(let i = 1; i <= 12; i++){
-
-
-
+		try{
+			for(let i = 1; i <= 12; i++){
+				const result = await db_client.query(query_days, [user, year, i]);	
+				response.push(result.rows)
+			}
+			return {data: response}
+		}catch(error){
+			return error;
 		}
-		
 	}
-
-
 }

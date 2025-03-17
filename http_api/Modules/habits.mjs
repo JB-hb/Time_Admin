@@ -73,13 +73,22 @@ export class habits_modules{
 		
 	}
 
-	static async get_habit_graph_w(user_id, start, end){
+	static async get_habit_graph_r(user_id, start, end){
 
 		const database = new db();
-		const data = database.get_comhabits_w(user_id, start, end);
+		const data = await database.get_comhabits_w(user_id, start, end);
 
-		return data.rows;
+		return data;
 
+	}
+
+	static async get_habit_graph_y(user_id, year){
+
+		const database = new db();
+		const data = await database.get_comhabits_y(user_id, year)
+
+		return data;
+		
 	}
 
 }
