@@ -3,7 +3,7 @@ import {db} from "./Objects/Object-database.mjs"
 
 export class activity_module{
 
-	static async get_day_activities(user_id){
+	static async get_day_activities({user_id}){
 
 		const database = new db();
 		const day = new Date();
@@ -21,7 +21,7 @@ export class activity_module{
 
 	}
 
-	static async get_all_activities(user_id){
+	static async get_all_activities({user_id}){
 
 		const database = new db();
 		const day = new Date();

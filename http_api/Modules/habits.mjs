@@ -42,14 +42,14 @@ export class habits_modules{
 
 	}
 
-	static async get_habit_graph_m(user_id, month){
+	static async get_habit_graph_m(user_id, month, year){
 
 		let flag = 0;
 		let cont = 1;
 		let week = [];
 		const points = [];
 		const database = new db();
-		const data = await database.get_comhabits_m(user_id, month);
+		const data = await database.get_comhabits_m(user_id, month, year);
 
 		data.rows.foreach(item => {
 			if(flag == 0){

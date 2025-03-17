@@ -181,7 +181,7 @@ export class db {
 
 		try{
 
-			let text: `SELECT * FROM ${table} WHERE `;
+			let text = `SELECT * FROM ${table} WHERE `;
 
 			for(let i = 0; i < (columns.length - 1); i++){
 				text = text + `${column[i]} = $${i+1} AND`
@@ -295,7 +295,7 @@ export class db {
 	//user -> id del usuario
 	//obj -> objeto que contiene el year y el mes que se esta buscando
 
-	async get_comhabits_m(user, {month, year}){
+	async get_comhabits_m(user, month, year){
 
 		const response = [];
 		const first = new Date(year, month-1, 1);

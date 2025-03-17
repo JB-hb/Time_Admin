@@ -1,4 +1,5 @@
 import {v4 as uuid} from "uuid"
+import {user} from "./Objects-user.mjs"
 import {db} from "./Objects-database.mjs"
 
 export class auth_module{
@@ -13,7 +14,6 @@ export class auth_module{
 		};
 
 		const item = new user(data);
-
 		const database = new db();
 		const state = await database.insert_s(item);
 

@@ -1,12 +1,14 @@
 import {db} from "./Objects/Object-database"
 import {tarea} from "./Objects/Object-tarea.mjs"
 
-export class tareas_modules{
+//todo: agragar metodo complete_task
 
-	static async get_tareas(category_id){
+export class tareas_module{
+
+	static async get_tareas({id_cat, user_id}){
 
 		const database = new db();
-		const state = await database.get_row("tareas", ["category_id"], [category_id]);
+		const state = await database.get_row("tareas", ["category_id", "user_id"], [category_id, user_id]);
 
 		if(state.code != 0){
 			return {error: state.error};
@@ -19,7 +21,7 @@ export class tareas_modules{
 		return state;
 	}
 
-	static async get_all_tareas(user_id){
+	static async get_all_tareas({user_id}){
 
 		const database = new db();
 		const state = await database.get_row("tareas", ["user_id"], [user_id]);
@@ -35,7 +37,7 @@ export class tareas_modules{
 		return state.rows;
 	}
 
-	static async get_today(user_id){
+	static async get_today({user_id}){
 
 		const database = new db();
 		const today = new Date();
@@ -52,7 +54,6 @@ export class tareas_modules{
 		return state.rows
 
 	}
-
 
 
 }
