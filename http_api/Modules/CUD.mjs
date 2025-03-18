@@ -5,7 +5,7 @@ import {habit} from "./Objects/Object-habit.mjs"
 import {category} from "./Objects/Object-category.mjs"
 import {reward} from "./Objects/Object-reward.mjs"
 
-export class CUD_module{
+export class cud_module{
 	
 	//items = {data}
 	select_object(table, item){
